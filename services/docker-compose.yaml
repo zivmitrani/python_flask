@@ -18,7 +18,7 @@ services:
         image: py_app
         container_name: py_flask
         networks:
-            docker-network:
+            our-network:
                 aliases:
                     - py_flask
         ports:
