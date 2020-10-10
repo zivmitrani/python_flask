@@ -51,17 +51,5 @@ pipeline {
         }
 
      }
-    post {
-        cleanWs { // Clean after build
-            cleanWhenAborted(true)
-            cleanWhenFailure(true)
-            cleanWhenNotBuilt(false)
-            cleanWhenSuccess(true)
-            cleanWhenUnstable(true)
-            deleteDirs(false)
-            notFailBuild(true)
-            disableDeferredWipeout(flase)
 
-        }
-    }
 }
