@@ -62,9 +62,9 @@ pipeline {
         stage("Deployment"){
             steps {
             sh '''
-            docker-compose -H "ssh://ubuntu@172.31.89.110" pull -f services/docker-compose.yml
-            docker-compose -H "ssh://ubuntu@172.31.89.110" down -v -f services/docker-compose.yml
-            docker-compose -H "ssh://ubuntu@172.31.89.110" up -d  -f services/docker-compose.yml
+            docker-compose pull -f services/docker-compose.yml
+            docker-compose down -v -f services/docker-compose.yml
+            docker-compose up -d  -f services/docker-compose.yml
 
             '''
             }
