@@ -56,11 +56,12 @@ pipeline {
                 )
                 }
             }
+        }
 
 
         stage("Deployment"){
             steps {
-                withCredentials([[$class: 'sshUserPrivateKey', credentialsId: "deployment_env", usernameVariable: 'SSH_USER', keyFileVariable: 'SSH_KEY']]) {
+            withCredentials([[$class: 'sshUserPrivateKey', credentialsId: "deployment_env", usernameVariable: 'SSH_USER', keyFileVariable: 'SSH_KEY']]) {
             sh '''
             docker-compose -H "ssh://ubuntu@172.31.89.110" pull
             docker-compose -H "ssh://ubuntu@172.31.89.110" down -v
@@ -69,8 +70,6 @@ pipeline {
             '''
                 }
             }
-
-
         }
 
         stage('cleanup'){
@@ -78,6 +77,5 @@ pipeline {
     		    cleanWs ()
             }
         }
-     }
 
 }
