@@ -52,7 +52,7 @@ pipeline {
                     label: "Docker: Login  "
                 )
                 sh (
-                    script: "docker push "${env.ACCOUNT}/${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_NAME}.${env.IMAGE_VERSION}"",
+                    script: "docker push ${env.ACCOUNT}/${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_NAME}.${env.IMAGE_VERSION}",
                     label: "Docker: push "
                 )
 
