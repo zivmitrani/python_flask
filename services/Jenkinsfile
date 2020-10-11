@@ -39,7 +39,7 @@ pipeline {
                     label: "Docker: cd dockerfile folder "
                 )
                 sh (
-                    script: "docker build -t ${env.ACCOUNT}/${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_NAME}.${env.IMAGE_VERSION} . ",
+                    script: "docker build -t ${env.ACCOUNT}/${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_NAME}.${env.IMAGE_VERSION} -f ./services/app/Dockerfile . ",
                     label: "Docker: build python_flask image "
                 )
             }
