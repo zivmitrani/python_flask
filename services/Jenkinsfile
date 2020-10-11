@@ -8,6 +8,7 @@ pipeline {
         DOCKERHUB_REPO = "py-docker-images"
         DOCKER_IMAGE_NAME = "py_flask"
         IMAGE_VERSION = "v1.0.0"
+        BUILD_NAME = "py_flask"
     }
     parameters {
         choice(name: 'branch', choices: ['master', 'develop'], description: 'Source Branch')
@@ -26,7 +27,7 @@ pipeline {
         stage('Build Preperations'){
             steps {
                 script {
-                    currentBuild.displayName = "${env.BUILD_VERSION}-#${env.BUILD_NUMBER}-(${params.branch})"
+                    currentBuild.displayName = "${env.BUILD_NAME}-#${env.BUILD_NUMBER}-(${params.branch})"
                     sh 'printenv'
                 }
             }
