@@ -58,9 +58,13 @@ pipeline {
             }
         }
 
-        cleanup {
-    		cleanWs disableDeferredWipeout: false, deleteDirs: false
-    	}
-
+        stage('cleanup'){
+            steps {
+    	      cleanup {
+    		    cleanWs disableDeferredWipeout: false, deleteDirs: false
+    	      }
+            }
+        }
      }
+
 }
