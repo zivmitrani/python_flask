@@ -48,7 +48,7 @@ pipeline {
             steps {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "dockerhub_ziv", usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASSWORD']]) {
                     sh (
-                        script: "docker-push ${env.ACCOUNT}/${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_NAME}.${env.IMAGE_VERSION} --user ${DOCKERHUB_USER} --password ${DOCKERHUB_PASSWORD}",
+                        script: "docker push ${env.ACCOUNT}/${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_NAME}.${env.IMAGE_VERSION} --user ${DOCKERHUB_USER} --password ${DOCKERHUB_PASSWORD}",
                         label: "DockerHub: Publish Docker Image"
                     )
                 }
