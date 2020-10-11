@@ -15,7 +15,7 @@ services:
         build:
             context: ./app/
             dockerfile: Dockerfile
-        image: zivmit/py-docker-images:py_app.latest
+        image: zivmit/py-docker-images:latest
         container_name: py_flask
         networks:
             our-network:

@@ -4,10 +4,9 @@ pipeline {
     }
     environment {
         GIT_CODE_URL = "https://github.com/zivmitrani/python_flask.git"
-        ACCOUNT = "zivmit"
-        DOCKERHUB_REPO = "py-docker-images"
-        DOCKER_IMAGE_NAME = "py_flask"
-        IMAGE_VERSION = "v1.0.0"
+        DOCKERHUB_REPO = "zivmit"
+        DOCKER_IMAGE_NAME = "py-docker-images"
+        IMAGE_VERSION = "latest"
         BUILD_NAME = "py_flask"
     }
     parameters {
@@ -39,7 +38,7 @@ pipeline {
                     label: "Docker: cd dockerfile folder "
                 )
                 sh (
-                    script: "docker build -t ${env.ACCOUNT}/${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_NAME}.${env.IMAGE_VERSION} -f ./services/app/Dockerfile . ",
+                    script: "docker build -t ${env.DOCKERHUB_REPO}/${env.DOCKER_IMAGE_NAME}:${env.IMAGE_VERSION} -f ./services/app/Dockerfile . ",
                     label: "Docker: build python_flask image "
                 )
             }
@@ -52,14 +51,12 @@ pipeline {
                     label: "Docker: Login  "
                 )
                 sh (
-                    script: "docker push ${env.ACCOUNT}/${env.DOCKERHUB_REPO}:${env.DOCKER_IMAGE_NAME}.${env.IMAGE_VERSION}",
+                    script: "docker push ${env.DOCKERHUB_REPO}/${env.DOCKER_IMAGE_NAME}:${env.IMAGE_VERSION}",
                     label: "Docker: push "
                 )
-
                 }
             }
         }
 
      }
-
 }
