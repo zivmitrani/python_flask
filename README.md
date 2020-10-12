@@ -1,5 +1,69 @@
 # python_flask
-A Python web application using Flask framework 
+A Python web application using Flask framework, using Ngninx for reverse proxy.
+For deployment of these services I used DockerCompose as an orchestrator.
+#### flask service overview:
+
+```
+    flask:
+        build:
+            context: ./app/
+            dockerfile: Dockerfile
+        image: zivmit/py-docker-images:latest
+        container_name: py_flask
+        networks:
+            our-network:
+                aliases:
+                    - py_flask
+        ports:
+            - 8080:5000
+networks:
+    our-network:
+```
+Docker-compose will build a container named py_flask and expose the service on ports 8080 (outside the container) and 5000 (inside the container).
+The ngnix container will use the `our-network` for communication with py_flask container.
+Docker-compose will build the image from this Dockerfile:
+it will copy the application code into te container, and install requirements(flask) via pip3.
+
+```
+FROM python:3.6.1-alpine
+WORKDIR /usr/src/app
+COPY services/app/ /usr/src/app
+RUN pip3 install -r requirements.txt
+CMD ["python3","api.py"]
+```
+
+#### Nginx creation overview:
+```
+services:
+    nginx:
+        image: nginx:1.17-alpine
+        container_name: nginx
+        depends_on:
+            - py_flask
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - our-network
+        ports:
+            - 80:80
+````
+Nginx container is depend on py_flask container which means it will up just after the py_flask container will be up.
+I mounted a ngnix.conf file that configured to be a proxy for py_flask service. 
+
+```
+server {
+    listen 80;
+    server_name localhost;
+location / {
+        proxy_pass http://py_flask:5000/;
+        proxy_set_header Host "localhost";
+    }
+}
+```
+I created a Jenkinsfile that will trrigerd when pushing a new code version, the job will build a DockerImage and push it to DockerHUb.
+You can see the Jenkinsfile here:
+https://github.com/zivmitrani/python_flask/blob/master/services/Jenkinsfile 
+
 
 
 links I used:
