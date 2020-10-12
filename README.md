@@ -64,6 +64,16 @@ I created a Jenkinsfile that will trrigerd when pushing a new code version, the 
 You can see the Jenkinsfile here:
 https://github.com/zivmitrani/python_flask/blob/master/services/Jenkinsfile 
 
+### Deployment to remote host
+I created a Freestyle Jenkins Job that triggers to run after the `Py_flask_build` Jenkins jobs is finished and Succeeded.
+The Job connect to remote host with SSH and pull new Image version and Run Docker-compose up --force-recreate.
+For production ready environemt I was Implemete it by:
+- Create an EKS cluster via Terraform\CloudFormation.
+- Package the service as Helm chart.
+- Define replicaCount to min 2 pods for scaling.
+- Use RollingUpdate deployment strategy to keep the production environmets allways up also while deployment time.
+
+
 
 
 links I used:
