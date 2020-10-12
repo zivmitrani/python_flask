@@ -71,7 +71,9 @@ For production ready environemt I was Implemete it by:
 - Create an EKS cluster via Terraform\CloudFormation.
 - Package the service as Helm chart.
 - Define replicaCount to min 2 pods for scaling.
-- Use RollingUpdate deployment strategy to keep the production environmets allways up also while deployment time.
+- Use RollingUpdate deployment strategy to keep at least some pods(containers) running for keeping production environmet with no downtime while deploying a new version\ performing changes.
+Old pods will terminate only after the new pods have started-up and became ready to handle traffic.
+
 
 
 
