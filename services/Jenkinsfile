@@ -62,12 +62,6 @@ pipeline {
                 }
             }
         }
-
-        stage('cleanup'){
-            steps {
-    		    cleanWs ()
-            }
-        }
         stage('SSH into the server') {
             steps {
                 withCredentials([[$class: 'sshUserPrivateKey', credentialsId: "deployment_env", usernameVariable: 'USER', keyFileVariable: 'KEY']]) {
@@ -84,5 +78,11 @@ pipeline {
               }
             }
         }
+        stage('cleanup'){
+            steps {
+    		    cleanWs ()
+            }
+        }
+
     }
 }
