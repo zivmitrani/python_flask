@@ -68,5 +68,21 @@ pipeline {
     		    cleanWs ()
             }
         }
+        stage('SSH into the server') {
+            steps {
+                withCredentials([[$class: 'sshUserPrivateKey', credentialsId: "deployment_env", usernameVariable: 'USER', keyFileVariable: 'KEY']]) {
+                script {
+                    def remote = [:]
+                    remote.name = 'deploymentenv'
+                    remote.host = '172.31.89.110'
+                    remote.user = '${USER}'
+                    remote.identityFile = '${KEY}'
+                    remote.allowAnyHosts = true
+                    writeFile file: 'abc.sh', text: 'ls -lrt'
+                    sshPut remote: remote, from: './python_flask', into: '.'
+                }
+              }
+            }
+        }
     }
 }
